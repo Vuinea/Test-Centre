@@ -28,6 +28,7 @@ class StudentTest(db.Model):
     test_id = db.Column(db.Integer, db.ForeignKey('test.id'), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
     comments = db.Column(db.Text, nullable=True)
+    deliverd = db.Column(db.Boolean, nullable=False)
 
     student = db.relationship('Student', backref=db.backref('student_tests', lazy=True))
     test = db.relationship('Test', backref=db.backref('student_tests', lazy=True))
