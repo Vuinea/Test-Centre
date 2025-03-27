@@ -1,9 +1,5 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test_centre.db"
-db = SQLAlchemy(app)
+from flask import render_template
+from .app import app, db
 
 
 @app.route('/')
@@ -13,3 +9,9 @@ def home():
 @app.route('/test')
 def test():
     return render_template('teacher/test_form.html')
+
+from .blueprints.teacher import teacher
+app.register_blueprint(teacher)
+
+# flask --app Test-Centre --debug  run
+
