@@ -5,7 +5,6 @@ import pandas as pd
 def create_database(db_name="students.db"):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
-    # creating table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Students (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
