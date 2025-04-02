@@ -4,44 +4,20 @@ from .models import db, Student
 
 def load_data_from_excel(file_path):
     xl = pd.ExcelFile(file_path)
+    # Using converters to convert all columns to string because otherwise pandas will convert empty cells to NaN
     students_df = xl.parse("Students",
                            converters={
-                                        "First Name": str, 
-                                        "Preferred": str, 
-                                       "Surname": str,
-                                        'TAG teacher': str,
-                                       'Block 1': str,
-                                       'Block 2': str,
-                                       'Block 3': str,
-                                        'Block 4': str,
-                                        'Block 5': str,
-                                        'Block 6': str,
-                                        'Block 7': str,
-                                        'Block 8': str,
+                                        col: str for col in xl.parse('Students').columns
                                     })
     ap_df = xl.parse("AP", 
                      converters={
-                        'First Name': str, 
-                        'Preferred': str, 
-                        'Surname': str,
-                        'Diagnosis': str,
-                        'Extra Time': str,
-                        'Room': str,
-                        'Computer': str,
-                        'AP Additional Support (Assessment Accomodation)': str,
-                        'AP Additional Strategies': str,
-                        'Overview': str,
-                        'Other Concerns': str
+                        col: str for col in xl.parse('AP').columns
                     })
     ell_df = xl.parse("ELL", 
                       converters={
-                        'First Name': str, 
-                        'Surname': str,
-                        'Extra Time': str,
-                        'ELL IB Approved': str,
-                        'Dictionary': str,
-                        'ELL Additional Notes': str
+                        col: str for col in xl.parse('ELL').columns
                       })
+
     return students_df, ap_df, ell_df
 
 # I merged all the data tabs into one list if names matched, so the database doesn't have different tabs
