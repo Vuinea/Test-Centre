@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 
 .ds_store
+
+ashbury_students.csv
