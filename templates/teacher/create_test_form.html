@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Test Form{% endblock %}
+
+{% block content %}
+    <h1>Teacher Create Test</h1>
+    <form method="POST">
+        {{ form.csrf_token }}
+        {{ form.name.label }} {{ form.name(size=20) }}
+        {{ form.time.label }} {{ form.time() }}
+        {{ form.open_note.label }} {{ form.open_note() }}
+        {{ form.comments.label }} {{ form.comments(rows=3, cols=40) }}
+        <button type="submit">Create</button>
+    </form>
+{% endblock %}
