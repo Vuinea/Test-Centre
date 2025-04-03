@@ -6,14 +6,14 @@ import os
 
 db_dir = os.path.join(os.getcwd(), 'instance/test_centre.db')
 
-with app.app_context():
-    db.drop_all()
-    db.create_all()
-    insert_into_database()
-    # TODO: remove this
-    t = Teacher(name='John Doe')
-    db.session.add(t)
-    db.session.commit()
+# with app.app_context():
+#     db.drop_all()
+#     db.create_all()
+#     insert_into_database()
+#     # TODO: remove this
+#     t = Teacher(name='John Doe')
+#     db.session.add(t)
+#     db.session.commit()
 
 
 @app.route('/')

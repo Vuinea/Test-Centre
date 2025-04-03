@@ -4,5 +4,6 @@
 {% block content %}
     {% for test in tests %}
         {{ test.name }}
+        <a style="color: red" href="{{ url_for('teacher.delete_test', test_id=test.id) }}">Delete</a>
     {% endfor %}
 {% endblock %}
