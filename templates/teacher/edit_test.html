@@ -4,11 +4,41 @@
 
 {% block content %}
     <form method="POST">
-        {{ form.csrf_token }}
-        {{ form.name.label }} {{ form.name(size=20) }}
-        {{ form.time.label }} {{ form.time() }}
-        {{ form.open_note.label }} {{ form.open_note() }}
-        {{ form.comments.label }} {{ form.comments(rows=3, cols=40) }}
+        {{ test_form.csrf_token }}
+        {{ test_form.name.label }} {{ test_form.name(size=20) }}
+        {{ test_form.time.label }} {{ test_form.time() }}
+        {{ test_form.open_note.label }} {{ test_form.open_note() }}
+        {{ test_form.comments.label }} {{ test_form.comments(rows=3, cols=40) }}
         <button type="submit">Create</button>
+    </form>
+
+    <form style="margin-top: 3rem;" action="{{ url_for('teacher.add_student', test_id=test.id) }}" method="post">
+        {{ student_form.csrf_token }}
+        <!-- Student ID Field -->
+        <div>
+            {{ student_form.student_name.label }}
+            {{ student_form.student_name }}
+        </div>
+        
+        <!-- Date Field -->
+        <div>
+            {{ student_form.date.label }}
+            {{ student_form.date }}
+        </div>
+
+        <!-- Time Field -->
+        <div>
+            {{ student_form.time.label }}
+            {{ student_form.time }}
+        </div>
+        
+        <!-- Comments Field -->
+        <div>
+            {{ student_form.comments.label }}
+            {{ student_form.comments }}
+        </div>
+        
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">{{ student_form.submit.label }}</button>
     </form>
 {% endblock %}

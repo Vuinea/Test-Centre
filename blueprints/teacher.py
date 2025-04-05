@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from ..forms.test import TestForm
+from ..forms.test import TestForm, StudentTestForm
 from ..db.models import Test, Teacher
 from ..app import app, db
 
@@ -36,18 +36,21 @@ def edit_test(test_id):
         return "Test not found or you do not have permission to edit this test", 404
 
     # Create a form instance, pre-populating it with the test's data
-    form = TestForm(obj=test)
+    test_form = TestForm(obj=test)
 
     if request.method == 'POST':
         # Populate the form with the submitted data
-        form = TestForm(request.form)
-        if form.validate_on_submit():
+        test_form = TestForm(request.form)
+        if test_form.validate_on_submit():
             # Update the test's attributes with form data
-            form.populate_obj(test)
+            test_form.populate_obj(test)
             db.session.commit()
-            return redirect(url_for('teacher.get_tests'))    
+            return redirect(url_for('teacher.get_tests'))
+    
+    # Creating the student form
+    student_form = StudentTestForm()
     # Render the edit form template
-    return render_template('teacher/edit_test.html', form=form, test=test)
+    return render_template('teacher/edit_test.html', test_form=test_form, student_form=student_form, test=test)
 
 @bp.route('/delete/<int:test_id>')
 def delete_test(test_id):
@@ -60,3 +63,27 @@ def delete_test(test_id):
     return redirect(url_for('teacher.get_tests'))
 
 
+@bp.route('/add_student/<int:test_id>', methods=['POST'])
+def add_student(test_id):
+    if request.method == 'POST':
+        print('POST request received')
+        form = StudentTestForm()
+        print(form.student_name.data)
+        print(form.date.data)
+        print(form.time.data)
+        print(request.form['time'])
+        if form.validate_on_submit():
+            print('Form validated')
+            student_name = form.student_name.data
+            date = form.date.data
+            time = form.time.data
+            comments = form.comments.data
+            print(time)
+            print('alsjkfkfldkkajfjjfj')
+            # Assuming you have a StudentTest model to handle the relationship
+            # student_test = StudentTestForm(student_id=student_id, test_id=test_id, date=date, comments=comments)
+            # db.session.add(student_test)
+            # db.session.commit()
+            # return redirect(url_for('teacher.get_tests'))
+
+        return redirect(url_for('teacher.edit_test', test_id=test_id))
