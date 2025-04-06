@@ -12,12 +12,16 @@
         <button type="submit">Create</button>
     </form>
 
+    {% for student in students %}
+        <p>{{ student.student.first_name }}</p>
+    {% endfor %}
+
     <form style="margin-top: 3rem;" action="{{ url_for('teacher.add_student', test_id=test.id) }}" method="post">
         {{ student_form.csrf_token }}
         <!-- Student ID Field -->
         <div>
-            {{ student_form.student_name.label }}
-            {{ student_form.student_name }}
+            {{ student_form.student_id.label }}
+            {{ student_form.student_id }}
         </div>
         
         <!-- Date Field -->

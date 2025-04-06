@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, BooleanField, TextAreaField, SubmitField
+from wtforms import StringField, FloatField, BooleanField, TextAreaField, SubmitField, IntegerField
 from wtforms.fields import DateField, TimeField
 from wtforms.widgets.html5 import DateInput, TimeInput
 from wtforms.validators import DataRequired, Optional
@@ -12,7 +12,7 @@ class TestForm(FlaskForm):
 	comments = TextAreaField('Comments', validators=[Optional()])
 
 class StudentTestForm(FlaskForm):
-	student_name = StringField('Student Name', validators=[DataRequired()])
+	student_id = IntegerField('Student Id', validators=[DataRequired()])
 	date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()], widget=DateInput(),
 				  render_kw={
                                           'min': datetime.datetime.now().strftime("%Y-%m-%d")
