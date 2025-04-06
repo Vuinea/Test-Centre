@@ -8,7 +8,7 @@
 
 {% block content %}
     <div class="section">
-        <h1>Edit {{ test.name }}</h1>
+        <h1>Edit {{ test.name.capitalize() }}</h1>
         <form method="POST">
             {{ test_form.hidden_tag() }}
 

@@ -20,7 +20,7 @@
                     <tbody>
                         {% for test in tests %}
                             <tr>
-                                <td>{{ test.name }}</td>
+                                <td>{{ test.name.capitalize() }}</td>
                                 <td>{{ test.time|int }} min</td>
                                 {% if test.open_note %}
                                     <td>Yes</td>
