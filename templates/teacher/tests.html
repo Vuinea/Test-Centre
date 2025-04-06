@@ -1,10 +1,39 @@
 {% extends 'base.html' %}
 
-{% block title %}Tests{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='teacher/test.css') }}">
+{% endblock %}
+
 {% block content %}
-    {% for test in tests %}
-        {{ test.name }}
-        <a style="color: green;" href="{{ url_for('teacher.edit_test', test_id=test.id) }}">Edit</a>
-        <a style="color: red" href="{{ url_for('teacher.delete_test', test_id=test.id) }}">Delete</a>
-    {% endfor %}
+        <!-- Create Test Section -->
+        <div class="section">
+            <h1>My Tests</h1>
+                <table style="margin-top: 1.5rem; margin-bottom: 1.5rem">
+                    <thead>
+                        <th>Test Name</th>
+                        <th>Duration</th>
+                        <th>Open Note</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        {% for test in tests %}
+                            <tr>
+                                <td>{{ test.name }}</td>
+                                <td>{{ test.time|int }} min</td>
+                                {% if test.open_note %}
+                                    <td>Yes</td>
+                                {% else %}
+                                    <td>No</td>
+                                {% endif %}
+                                <td>
+                                    <a class="edit-btn" href="{{ url_for('teacher.edit_test', test_id=test.id) }}">Edit</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            <div class="button-group">
+            <a href="{{ url_for('teacher.create_test') }}" class="button" id="create-test">Create</a>
+            </div>
+        </div>
 {% endblock %}
