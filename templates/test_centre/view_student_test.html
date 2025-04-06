@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}View Student Test{% endblock %}
+
+{% block content %}
+<h1>View {{ student_test.student.preferred }}'s Test</h1>
+
+<h2>Information about {{ student_test.student.preferred }}</h2>
+<table border="1">
+	<thead>
+		<tr>
+			{% for key in student_info.keys() %}
+				<th>{{ key }}</th>
+			{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			{% for value in student_info.values() %}
+				<td>{{ value }}</td>
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+<h2>Test Information</h2>
+<table border="1">
+	<thead>
+		<tr>
+			{% for key in test_info.keys() %}
+				<th>{{ key }}</th>
+			{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			{% for value in test_info.values() %}
+				<td>{{ value }}</td>
+			{% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+<a href="{{ url_for('test_centre.view_schedule') }}">
+	Go back to schedule
+</a>
+
+{% endblock %}
+
+

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}View Tests{% endblock %}
+
+{% block content %}
+<h1>View Tests</h1>
+
+{% if tests %}
+    <table>
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Test Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Completed</th>
+                <th>Delivered</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in tests %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('test_centre.view_student_test', student_test_id=test.id) }}">
+                            {{ test.student.first_name }}
+                        </a>
+                    </td>
+                    <td>{{ test.test.name }}</td>
+                    <td>{{ test.date.date() }}</td>
+                    <td>{{ test.date.time() }}</td>
+                    <td>{{ test.completed }}</td>
+                    <td>{{ test.delivered }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No tests scheduled.</p>
+{% endif %}
+{% endblock %}
