@@ -1,48 +1,32 @@
 {% extends 'base.html' %}
 
-{% block title %}Edit Test{% endblock %}
+{% block title %}Edit {{ test.name }}{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='teacher/edit_test.css') }}">
+{% endblock %}
 
 {% block content %}
-    <form method="POST">
-        {{ test_form.csrf_token }}
-        {{ test_form.name.label }} {{ test_form.name(size=20) }}
-        {{ test_form.time.label }} {{ test_form.time() }}
-        {{ test_form.open_note.label }} {{ test_form.open_note() }}
-        {{ test_form.comments.label }} {{ test_form.comments(rows=3, cols=40) }}
-        <button type="submit">Create</button>
-    </form>
+    <div class="section">
+        <h1>Edit Test</h1>
+        <form method="POST">
+            {{ test_form.hidden_tag() }}
 
-    {% for student in students %}
-        <p>{{ student.student.first_name }}</p>
-    {% endfor %}
+            {{ test_form.name.label }}
+            {{ test_form.name(size=20) }}
 
-    <form style="margin-top: 3rem;" action="{{ url_for('teacher.add_student', test_id=test.id) }}" method="post">
-        {{ student_form.csrf_token }}
-        <!-- Student ID Field -->
-        <div>
-            {{ student_form.student_id.label }}
-            {{ student_form.student_id }}
-        </div>
-        
-        <!-- Date Field -->
-        <div>
-            {{ student_form.date.label }}
-            {{ student_form.date }}
-        </div>
+            {{ test_form.time.label }}
+            {{ test_form.time() }}
 
-        <!-- Time Field -->
-        <div>
-            {{ student_form.time.label }}
-            {{ student_form.time }}
-        </div>
-        
-        <!-- Comments Field -->
-        <div>
-            {{ student_form.comments.label }}
-            {{ student_form.comments }}
-        </div>
-        
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">{{ student_form.submit.label }}</button>
-    </form>
+            {{ test_form.open_note.label }}
+            {{ test_form.open_note() }}
+
+            {{ test_form.comments.label }}
+            {{ test_form.comments(rows=3, cols=40) }}
+            <div class="button-group">
+                <a href="{{ url_for('teacher.get_tests') }}" class="button return-btn">Go back</a>
+                <button id="finalize-test-btn" type="submit">Update Test</button>
+            </div>
+        </form>
 {% endblock %}
+

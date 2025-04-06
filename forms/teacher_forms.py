@@ -3,7 +3,6 @@ from wtforms import StringField, FloatField, BooleanField, TextAreaField, Submit
 from wtforms.fields import DateField, TimeField
 from wtforms.widgets.html5 import DateInput, TimeInput, NumberInput
 from wtforms.validators import DataRequired, Optional
-from wtforms.widgets import Select
 import datetime
 from ..app import app, db
 from ..db.models import Student
@@ -14,8 +13,13 @@ with app.app_context():
 class TestForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired()])
 	time = FloatField('Time (minutes)', validators=[DataRequired()], widget=NumberInput(min=0))
-	open_note = BooleanField('Open Note', default=False)
-	comments = TextAreaField('Comments', validators=[Optional()])
+	open_note = SelectField('Open Note', choices=[
+		(True, 'Yes'),
+		(False, 'No')
+	],
+	coerce=lambda x: x == 'True' if isinstance(x, str) else bool(x))
+	comments = TextAreaField('Comments', validators=[Optional()], 
+						  render_kw={'placeholder': 'Write any test instructions here...'})
 
 class StudentTestForm(FlaskForm):
 	student_id = SelectField('Student', validators=[DataRequired()], 

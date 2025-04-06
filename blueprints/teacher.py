@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 import datetime
 from ..forms.teacher_forms import TestForm, StudentTestForm
 from ..db.models import Test, Teacher, StudentTest, Student
@@ -41,15 +41,21 @@ def edit_test(test_id):
     # Create a form instance, pre-populating it with the test's data
     test_form = TestForm(obj=test)
     test_form.time.data = int(test.time)
+    test_form.open_note.data = test.open_note
+    print(test_form.open_note.data)
 
     if request.method == 'POST':
         # Populate the form with the submitted data
         test_form = TestForm(request.form)
         if test_form.validate_on_submit():
             # Update the test's attributes with form data
+            test_form.open_note.data = bool(int(test_form.open_note.data))
+            print(test_form.open_note.data)
             test_form.populate_obj(test)
             db.session.commit()
             return redirect(url_for('teacher.get_tests'))
+        else:
+            flash('Something went wrong, please try again.')
     
     # Creating the student form
     student_form = StudentTestForm()

@@ -1,0 +1,141 @@
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f5f6f7;
+    padding: 40px;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  
+  .sub-header {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 24px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  
+  .duration-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  
+  .duration-row input {
+    flex: 1;
+  }
+  
+  .duration-row span {
+    font-size: 16px;
+    color: #444;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .note {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #444;
+  }  
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  button {
+    padding: 12px 26px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  #save-draft {
+    background-color: white;
+    border: 2px solid #000;
+    color: #000;
+  }
+  
+  #save-draft:hover {
+    background-color: #f0f0f0;
+  }
+  
+  #finalize-test {
+    background-color: #000;
+    color: #fff;
+    border: none;
+  }
+  
+  #finalize-test:hover {
+    background-color: #222;
+  }
+
+  #finalize-test-btn {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  #finalize-test-btn:hover {
+    background-color: #222;
+  }
+  
+.button {
+    padding: 12px 26px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+  
+.return-btn {
+  background-color: white;
+  border: 2px solid #000;
+  color: #000;
+}
+  
+.return-btn:hover {
+  background-color: #f0f0f0;
+}
