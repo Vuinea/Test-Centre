@@ -1,10 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, BooleanField, TextAreaField, SubmitField, IntegerField
+from wtforms import StringField, FloatField, BooleanField, TextAreaField, SubmitField, SelectField
 from wtforms.fields import DateField, TimeField
 from wtforms.widgets.html5 import DateInput, TimeInput
 from wtforms.validators import DataRequired, Optional
+from wtforms.widgets import Select
 import datetime
+from ..app import app, db
+from ..db.models import Student
 
+with app.app_context():
+	students = db.session.query(Student).all()
+	student_choices = [(str(student.id), f'{student.preferred} {student.surname}') for student in students]
 class TestForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired()])
 	time = FloatField('Time', validators=[DataRequired()])
@@ -12,7 +18,9 @@ class TestForm(FlaskForm):
 	comments = TextAreaField('Comments', validators=[Optional()])
 
 class StudentTestForm(FlaskForm):
-	student_id = IntegerField('Student Id', validators=[DataRequired()])
+	student_id = SelectField('Student', validators=[DataRequired()], 
+						 choices=student_choices,
+						)
 	date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()], widget=DateInput(),
 				  render_kw={
                                           'min': datetime.datetime.now().strftime("%Y-%m-%d")
@@ -24,5 +32,9 @@ class StudentTestForm(FlaskForm):
 				  })
 	comments = TextAreaField('Comments', validators=[Optional()])
 	submit = SubmitField('Submit')
+
+	def iter_choices(self):
+		# This method is used to iterate over the choices for the student_id field
+		return student_choices
 
 

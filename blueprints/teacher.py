@@ -84,6 +84,13 @@ def add_student(test_id):
             student = db.session.query(Student).filter(Student.id == student_id).first()
             if not student:
                 return "Student not found", 404
+            # Check if the student is already enrolled in the test
+            existing_enrollment = db.session.query(StudentTest).filter(
+                StudentTest.student_id == student_id,
+                StudentTest.test_id == test_id
+            ).first()
+            if existing_enrollment:
+                return "Student is already enrolled in this test", 400
             student_test = StudentTest(
                 student=student,
                 test=test,
