@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 import datetime
-from ..forms.test import TestForm, StudentTestForm
+from ..forms.teacher_forms import TestForm, StudentTestForm
 from ..db.models import Test, Teacher, StudentTest, Student
 from ..app import app, db
 
