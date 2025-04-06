@@ -39,6 +39,9 @@ class Student(db.Model):
             value = value.strip().lower()
             if value == '':
                 return False
+            if value == 'yes':
+                return True
+            return False
         return value
 
     @validates('extra_time', 'ELL_extra_time')
