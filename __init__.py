@@ -1,4 +1,3 @@
-from flask import g
 from .app import app, db, DB_NAME
 from .db.models import *
 from .db.database import insert_into_database
@@ -13,6 +12,10 @@ db_dir = os.path.join(os.getcwd(), 'instance/test_centre.db')
 #     # TODO: remove this
 #     t = Teacher(name='John Doe')
 #     db.session.add(t)
+#     tc_teacher = Teacher(name='Mrs. Slater', test_centre_employee=True)
+#     db.session.add(tc_teacher)
+#     example_test = Test(name='Example Test', time=60, teacher=t)
+#     db.session.add(example_test)
 #     db.session.commit()
    
 
@@ -22,6 +25,8 @@ def home():
 
 from .blueprints.teacher import bp as teacher_bp
 app.register_blueprint(teacher_bp)
+from .blueprints.test_centre import bp as test_centre_bp
+app.register_blueprint(test_centre_bp)
 
-# flask --app Test-Centre --debug  run
+# flask --app Test-Centre --debug run
 
