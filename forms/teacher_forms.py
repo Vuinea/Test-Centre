@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField, BooleanField, TextAreaField, SubmitField, SelectField
 from wtforms.fields import DateField, TimeField
-from wtforms.widgets.html5 import DateInput, TimeInput
+from wtforms.widgets.html5 import DateInput, TimeInput, NumberInput
 from wtforms.validators import DataRequired, Optional
 from wtforms.widgets import Select
 import datetime
@@ -13,7 +13,7 @@ with app.app_context():
 	student_choices = [(str(student.id), f'{student.preferred} {student.surname}') for student in students]
 class TestForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired()])
-	time = FloatField('Time', validators=[DataRequired()])
+	time = FloatField('Time (minutes)', validators=[DataRequired()], widget=NumberInput(min=0))
 	open_note = BooleanField('Open Note', default=False)
 	comments = TextAreaField('Comments', validators=[Optional()])
 

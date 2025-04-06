@@ -40,6 +40,7 @@ def edit_test(test_id):
     enrolled_students = db.session.query(StudentTest).filter(StudentTest.test_id == test_id).all()
     # Create a form instance, pre-populating it with the test's data
     test_form = TestForm(obj=test)
+    test_form.time.data = int(test.time)
 
     if request.method == 'POST':
         # Populate the form with the submitted data
