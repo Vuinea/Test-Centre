@@ -48,7 +48,7 @@ class Test(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
     time = db.Column(db.Float, nullable=False)
-    open_note = db.Column(db.Boolean, nullable=False)
+    open_note = db.Column(db.Boolean, default=False)
     comments = db.Column(db.Text, nullable=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=False)
     teacher = db.relationship('Teacher', backref=db.backref('tests', lazy=True))
