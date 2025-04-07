@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
+from wtforms.validators import ValidationError
 from wtforms import StringField, FloatField, BooleanField, TextAreaField, SubmitField, SelectField
 from wtforms.fields import DateField, TimeField
-from wtforms.widgets.html5 import DateInput, TimeInput
+from wtforms.widgets.html5 import DateInput, TimeInput, NumberInput
 from wtforms.validators import DataRequired, Optional
-from wtforms.widgets import Select
 import datetime
 from ..app import app, db
 from ..db.models import Student
@@ -13,14 +13,23 @@ with app.app_context():
 	student_choices = [(str(student.id), f'{student.preferred} {student.surname}') for student in students]
 class TestForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired()])
-	time = FloatField('Time', validators=[DataRequired()])
-	open_note = BooleanField('Open Note', default=False)
-	comments = TextAreaField('Comments', validators=[Optional()])
-
+	time = FloatField('Time (minutes)', validators=[DataRequired()], widget=NumberInput(min=0))
+	open_note = SelectField('Open Note', choices=[
+		(True, 'Yes'),
+		(False, 'No')
+	],
+	coerce=lambda x: x == 'True' if isinstance(x, str) else bool(x))
+	comments = TextAreaField('Comments', validators=[Optional()], render_kw={'placeholder': 'Write any test instructions here...'})
+	
+	def validate_time(self, field):
+		if field.data <= 0:
+			raise ValidationError('Time must be greater than 0.')
+		
 class StudentTestForm(FlaskForm):
-	student_id = SelectField('Student', validators=[DataRequired()], 
-						 choices=student_choices,
-						)
+	# student_id = SelectField('Student', validators=[DataRequired()], 
+	# 					 choices=student_choices,
+	# 					)
+	student_id = StringField('Student', validators=[DataRequired()])
 	date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()], widget=DateInput(),
 				  render_kw={
                                           'min': datetime.datetime.now().strftime("%Y-%m-%d")

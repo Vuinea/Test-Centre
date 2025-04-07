@@ -75,6 +75,12 @@ class Test(db.Model):
     teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'), nullable=False)
     teacher = db.relationship('Teacher', backref=db.backref('tests', lazy=True))
 
+    @validates('name')
+    def validate_name(self, key, value):
+        if not value:
+            raise ValueError("Name cannot be empty")
+        return value.strip().lower()
+
 
 class StudentTest(db.Model):
     id = db.Column(db.Integer, primary_key=True)

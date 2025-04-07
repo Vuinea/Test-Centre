@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 import datetime
 from ..forms.teacher_forms import TestForm, StudentTestForm
 from ..db.models import Test, Teacher, StudentTest, Student
@@ -11,16 +11,28 @@ bp = Blueprint('teacher', __name__, url_prefix='/tests')
 def create_test():
     TEACHER = db.session.query(Teacher).where(Teacher.id == 1).first()
     form = TestForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        # Extract form data
-        name = form.name.data
-        time = form.time.data
-        open_note = form.open_note.data
-        comments = form.comments.data
-        # Create and save the Test object
-        test = Test(name=name, time=time, open_note=open_note, comments=comments, teacher=TEACHER)
-        db.session.add(test)
-        db.session.commit()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            # Extract form data
+            name = form.name.data.lower()
+            time = form.time.data
+            open_note = form.open_note.data
+            comments = form.comments.data
+            # check if it already exists
+            existing_test = Test.query.filter_by(name=name, teacher_id=TEACHER.id).first()
+            if existing_test:
+                flash('You have already created a test with this name', 'error')
+                return render_template('teacher/create_test.html', form=form)
+            # Create and save the Test object
+            test = Test(name=name, time=time, open_note=open_note, comments=comments, teacher=TEACHER)
+        
+            db.session.add(test)
+            db.session.commit()
+            flash('Test created successfully!', 'success')
+            return redirect(url_for('teacher.edit_test', test_id=test.id))
+        else:
+            flash(form.errors, 'error')
+
     return render_template('teacher/create_test.html', form=form)
 
 @bp.route('/')
@@ -40,15 +52,21 @@ def edit_test(test_id):
     enrolled_students = db.session.query(StudentTest).filter(StudentTest.test_id == test_id).all()
     # Create a form instance, pre-populating it with the test's data
     test_form = TestForm(obj=test)
+    test_form.time.data = int(test.time)
+    test_form.open_note.data = test.open_note
 
     if request.method == 'POST':
         # Populate the form with the submitted data
         test_form = TestForm(request.form)
         if test_form.validate_on_submit():
             # Update the test's attributes with form data
+            test_form.open_note.data = bool(int(test_form.open_note.data))
             test_form.populate_obj(test)
             db.session.commit()
+            flash(f'{test.name} updated successfully!', 'success')
             return redirect(url_for('teacher.get_tests'))
+        else:
+            flash('Something went wrong, please try again.')
     
     # Creating the student form
     student_form = StudentTestForm()
@@ -90,7 +108,10 @@ def add_student(test_id):
                 StudentTest.test_id == test_id
             ).first()
             if existing_enrollment:
-                return "Student is already enrolled in this test", 400
+                flash('Student is already enrolled in this test', 'error')
+                # return redirect(url_for('teacher.edit_test', test_id=test_id))
+                return "Student already enrooled in this test", 401
+                        
             student_test = StudentTest(
                 student=student,
                 test=test,
@@ -99,6 +120,36 @@ def add_student(test_id):
             )
             db.session.add(student_test)
             db.session.commit()
+            flash(f'{student.first_name} {student.surname} added successfully to {test.name}', 'success')
             return redirect(url_for('teacher.edit_test', test_id=test_id))
 
         return redirect(url_for('teacher.edit_test', test_id=test_id))
+
+@bp.route('/remove_student/<int:student_test_id>')
+def remove_student(student_test_id: int):
+    TEACHER = db.session.query(Teacher).where(Teacher.id == 1).first()
+    student_test = db.session.query(StudentTest).filter(StudentTest.id == student_test_id).first()
+    if not student_test:
+        flash("Student Test not found", 'error')
+        return redirect(url_for('teacher.get_tests'))
+    
+    student = student_test.student
+    test = student_test.test
+
+    db.session.delete(student_test)
+    db.session.commit()
+
+    flash(f"{student.first_name} removed successfully from {test.name}", 'success')
+    return redirect(url_for('teacher.edit_test', test_id=test.id))
+
+
+@bp.route('/get_students', methods=['GET'])
+def get_students():
+    TEACHER = db.session.query(Teacher).where(Teacher.id == 1).first()
+    students = db.session.query(Student).all()
+    s = {}
+    for student in students:
+        s[f'{student.first_name} {student.surname}'] = student.id
+    
+    return s
+

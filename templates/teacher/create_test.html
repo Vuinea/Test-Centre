@@ -1,15 +1,41 @@
 {% extends 'base.html' %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='teacher/edit_test.css') }}">
+{% endblock %}
+
 {% block title %}Create Test{% endblock %}
 
 {% block content %}
-    <h1>Teacher Create Test</h1>
-    <form method="POST">
-        {{ form.csrf_token }}
-        {{ form.name.label }} {{ form.name(size=20) }}
-        {{ form.time.label }} {{ form.time() }}
-        {{ form.open_note.label }} {{ form.open_note() }}
-        {{ form.comments.label }} {{ form.comments(rows=3, cols=40) }}
-        <button type="submit">Create</button>
+    <h1>Create Test</h1>
+    {# Display flashed messages #}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashed-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="post" style="margin-top: 1.5rem;">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label }} 
+        {{ form.name(size=32) }}
+
+        {{ form.time.label }}
+        {{ form.time() }}
+
+        {{ form.open_note.label }}
+        {{ form.open_note() }}
+
+        {{ form.comments.label }} 
+        {{ form.comments(rows=3, cols=40) }}
+        <div class="button-group">
+            <a href="{{ url_for('teacher.get_tests') }}" class="button return-btn">Go back</a>
+            <button id="finalize-test" type="submit">Create Test</button>
+        </div>
     </form>
+    
 {% endblock %}
