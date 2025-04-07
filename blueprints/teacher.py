@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 import datetime
 from ..forms.teacher_forms import TestForm, StudentTestForm
 from ..db.models import Test, Teacher, StudentTest, Student
@@ -139,4 +139,18 @@ def remove_student(student_test_id: int):
 
     flash(f"{student.first_name} removed successfully from {test.name}", 'success')
     return redirect(url_for('teacher.edit_test', test_id=test.id))
+
+
+@bp.route('/get_students', methods=['GET'])
+def get_students():
+    TEACHER = db.session.query(Teacher).where(Teacher.id == 1).first()
+    students = db.session.query(Student).all()
+    s = []
+    for student in students:
+        s.append({
+            'name': student.first_name + ' ' + student.surname,
+            'id': student.id,
+        })
+    
+    return s
 
