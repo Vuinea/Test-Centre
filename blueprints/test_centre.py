@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from collections import defaultdict
+from datetime import datetime, timedelta
 from ..db.models import Teacher, Test, StudentTest
+from ..utils import get_friday_of_week
 from ..app import db
 
 bp = Blueprint('test_centre', __name__, url_prefix='/test_centre')
@@ -12,10 +15,55 @@ def view_schedule():
     if not TEACHER.test_centre_employee:
         return "You do not have permission to access this page", 403
     
-    # Get all of the tests
-    tests = db.session.query(StudentTest).all()
+    now = datetime.now().date()
+    friday = get_friday_of_week()
+    # Get the tests that are there for the rest of the week
+    tests = db.session.query(StudentTest).filter(
+        StudentTest.date >= now,
+        StudentTest.date <= friday,
+    ).all()
+
+    #######
+    # Create a dictionary to group tests by day of the week, month, and day of the month
+    tests_by_day = defaultdict(list)
+
+    for test in tests:
+        # Format the key as "{day of the week}, {month} {day of month}"
+        test_date = test.date  # Assuming `test.date` is a datetime.date object
+        key = test_date.strftime("%A, %B %d")  # Example: "Monday, October 09"
+        tests_by_day[key].append(test)
+
+    # Convert defaultdict to a regular dictionary (optional)
+    tests_by_day = dict(tests_by_day)
+    ######
+
+    overdue_tests = db.session.query(StudentTest).filter(
+        StudentTest.date < now,
+        StudentTest.completed == False
+    ).all()
+
+
+    # These are for displaying on the UI
+    day_dict = {
+        0: "Monday",
+        1: "Tuesday",
+        2: "Wednesday",
+        3: "Thursday",
+        4: "Friday",
+        5: "Saturday",
+        6: "Sunday"
+    }
+
+    yes_no = {
+        True: 'Yes',
+        False: 'No',
+    }
     
-    return render_template('test_centre/view_schedule.html', tests=tests)
+    return render_template('test_centre/view_schedule.html', 
+                           day_dict=day_dict, 
+                           yes_no=yes_no,
+                           tests_by_day=tests_by_day,
+                           overdue_tests=overdue_tests,)
 
 
 @bp.route('view_student_test/<int:student_test_id>')
