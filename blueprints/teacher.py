@@ -145,12 +145,9 @@ def remove_student(student_test_id: int):
 def get_students():
     TEACHER = db.session.query(Teacher).where(Teacher.id == 1).first()
     students = db.session.query(Student).all()
-    s = []
+    s = {}
     for student in students:
-        s.append({
-            'name': student.first_name + ' ' + student.surname,
-            'id': student.id,
-        })
+        s[f'{student.first_name} {student.surname}'] = student.id
     
     return s
 

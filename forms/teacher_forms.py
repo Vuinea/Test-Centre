@@ -26,9 +26,10 @@ class TestForm(FlaskForm):
 			raise ValidationError('Time must be greater than 0.')
 		
 class StudentTestForm(FlaskForm):
-	student_id = SelectField('Student', validators=[DataRequired()], 
-						 choices=student_choices,
-						)
+	# student_id = SelectField('Student', validators=[DataRequired()], 
+	# 					 choices=student_choices,
+	# 					)
+	student_id = StringField('Student', validators=[DataRequired()])
 	date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()], widget=DateInput(),
 				  render_kw={
                                           'min': datetime.datetime.now().strftime("%Y-%m-%d")

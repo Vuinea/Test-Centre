@@ -180,3 +180,285 @@ th {
   background-color: #f9f9f9;
   font-weight: 600;
 }
+.autocomplete-list {
+  list-style: none;
+  margin-top: -6px;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 160px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.autocomplete-list li {
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f2f2f2;
+}
+
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f5f6f7;
+    padding: 40px;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: auto;
+    background-color: white;
+    padding: 48px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .sub-header {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 30px 0 10px;
+  }
+  
+  .section {
+    margin-bottom: 40px;
+  }
+  
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: 2px solid #ccc;
+    outline: none;
+    margin-bottom: 10px;
+    transition: border-color 0.3s;
+  }
+  
+  input[type="text"]:focus {
+    border-color: black;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    resize: vertical;
+  }
+  
+  .autocomplete-list {
+    list-style: none;
+    margin-top: -6px;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 160px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .autocomplete-list li {
+    padding: 12px 20px;
+    cursor: pointer;
+  }
+  
+  .autocomplete-list li:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .selected-students {
+    border: 2px dashed #999;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fdfdfd;
+    margin-top: 10px;
+  }
+  
+  .student-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  
+  .student-entry span {
+    flex: 1;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  .student-entry select {
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin: 0 10px;
+  }
+  
+  .remove-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .remove-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 14px;
+    margin-top: 12px;
+  }
+  
+  button {
+    font-size: 16px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s ease;
+  }
+  
+  #create-test,
+  #submit-all {
+    background-color: black;
+    color: white;
+    border: none;
+  }
+
+  .edit-btn {
+    font-size: 13px;
+    padding: 6px 20px;
+    background-color: #2d2d2d;
+    color: white;
+    border: 1px solid transparent; /* <== Reserve border space */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border 0.2s;
+  }
+  
+  .edit-btn:hover {
+    background-color: white;
+    color: #2d2d2d;
+    border: 1px solid #2d2d2d; /* No size change now! */
+  }
+  
+  #edit-assignment {
+    padding: 6px 12px;
+    font-size: 14px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  #assign-test {
+    background-color: black;
+    color: white;
+    border: none;
+  }
+  
+  #assign-test:hover,
+  #create-test:hover,
+  #submit-all:hover {
+    background-color: #222;
+  }
+  
+  #edit-assignment:hover {
+    background-color: #f2f2f2;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th,
+  td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    font-size: 15px;
+  }
+  
+  th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+  }
+
+  #edit-test {
+    display: none;
+  }
+  
+  .selected-students {
+    border: 2px dashed #999;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fdfdfd;
+    margin-top: 10px;
+  }
+
+  .autocomplete-list {
+    list-style: none;
+    margin-top: -6px;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 160px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .autocomplete-list li {
+    padding: 12px 20px;
+    cursor: pointer;
+  }
+  
+  .autocomplete-list li:hover {
+    background-color: #f2f2f2;
+  }
