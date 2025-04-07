@@ -243,4 +243,10 @@
     display: none;
   }
   
-  
+  .success {
+    color: green
+  }
+
+.error {
+  color: red;
+}

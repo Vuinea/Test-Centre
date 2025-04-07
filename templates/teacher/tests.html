@@ -10,6 +10,16 @@
         <!-- Create Test Section -->
         <div class="section">
             <h1>My Tests</h1>
+            {# Display flashed messages #}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashed-messages">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
                 <table style="margin-top: 1.5rem; margin-bottom: 1.5rem">
                     <thead>
                         <th>Test Name</th>

@@ -8,7 +8,17 @@
 
 {% block content %}
     <div class="section">
-        <h1>Edit {{ test.name.capitalize() }}</h1>
+        <h1 class="margin-bottom: 1.5rem;">Edit {{ test.name|title }}</h1>
+        {# Display flashed messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashed-messages">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <form method="POST">
             {{ test_form.hidden_tag() }}
 

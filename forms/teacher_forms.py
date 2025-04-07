@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from wtforms.validators import ValidationError
 from wtforms import StringField, FloatField, BooleanField, TextAreaField, SubmitField, SelectField
 from wtforms.fields import DateField, TimeField
 from wtforms.widgets.html5 import DateInput, TimeInput, NumberInput
@@ -18,9 +19,12 @@ class TestForm(FlaskForm):
 		(False, 'No')
 	],
 	coerce=lambda x: x == 'True' if isinstance(x, str) else bool(x))
-	comments = TextAreaField('Comments', validators=[Optional()], 
-						  render_kw={'placeholder': 'Write any test instructions here...'})
-
+	comments = TextAreaField('Comments', validators=[Optional()], render_kw={'placeholder': 'Write any test instructions here...'})
+	
+	def validate_time(self, field):
+		if field.data <= 0:
+			raise ValidationError('Time must be greater than 0.')
+		
 class StudentTestForm(FlaskForm):
 	student_id = SelectField('Student', validators=[DataRequired()], 
 						 choices=student_choices,

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 import datetime
 from ..forms.teacher_forms import TestForm, StudentTestForm
 from ..db.models import Test, Teacher, StudentTest, Student
@@ -11,16 +11,28 @@ bp = Blueprint('teacher', __name__, url_prefix='/tests')
 def create_test():
     TEACHER = db.session.query(Teacher).where(Teacher.id == 1).first()
     form = TestForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        # Extract form data
-        name = form.name.data
-        time = form.time.data
-        open_note = form.open_note.data
-        comments = form.comments.data
-        # Create and save the Test object
-        test = Test(name=name, time=time, open_note=open_note, comments=comments, teacher=TEACHER)
-        db.session.add(test)
-        db.session.commit()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            # Extract form data
+            name = form.name.data.lower()
+            time = form.time.data
+            open_note = form.open_note.data
+            comments = form.comments.data
+            # check if it already exists
+            existing_test = Test.query.filter_by(name=name, teacher_id=TEACHER.id).first()
+            if existing_test:
+                flash('You have already created a test with this name', 'error')
+                return render_template('teacher/create_test.html', form=form)
+            # Create and save the Test object
+            test = Test(name=name, time=time, open_note=open_note, comments=comments, teacher=TEACHER)
+        
+            db.session.add(test)
+            db.session.commit()
+            flash('Test created successfully!', 'success')
+            return redirect(url_for('teacher.edit_test', test_id=test.id))
+        else:
+            flash(form.errors, 'error')
+
     return render_template('teacher/create_test.html', form=form)
 
 @bp.route('/')
@@ -42,7 +54,6 @@ def edit_test(test_id):
     test_form = TestForm(obj=test)
     test_form.time.data = int(test.time)
     test_form.open_note.data = test.open_note
-    print(test_form.open_note.data)
 
     if request.method == 'POST':
         # Populate the form with the submitted data
@@ -50,9 +61,9 @@ def edit_test(test_id):
         if test_form.validate_on_submit():
             # Update the test's attributes with form data
             test_form.open_note.data = bool(int(test_form.open_note.data))
-            print(test_form.open_note.data)
             test_form.populate_obj(test)
             db.session.commit()
+            flash(f'{test.name} updated successfully!', 'success')
             return redirect(url_for('teacher.get_tests'))
         else:
             flash('Something went wrong, please try again.')
