@@ -38,63 +38,63 @@
                 <button id="finalize-test-btn" type="submit">Update Test</button>
             </div>
         </form>
-        <h2>Students Scheduled</h2>
-        <div id="selected-students" class="selected-students">
-            <table>
-                <thead>
-                    <th>Student</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    {% for student in students %}
-                        <tr>
-                            <td>{{ student.student.first_name + ' ' + student.student.surname }}</td>
-                            <td>{{ student.date.date().strftime('%m/%d/%Y') }}</td>
-                            <td>{{ student.date.time().strftime('%I:%M') }}</td>
-                            <td>
-                                <a href="{{ url_for('teacher.remove_student', student_test_id=student.id) }}" class="remove-student-btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
-                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div style="margin-top: 2rem;">
+            <h2>Students Scheduled</h2>
+            <div id="selected-students" class="selected-students">
+                <table id="assignment-table">
+                    <thead>
+                        <th>Student</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            <tr>
+                                <td>{{ student.student.first_name + ' ' + student.student.surname }}</td>
+                                <td>{{ student.date.date().strftime('%m/%d/%Y') }}</td>
+                                <td>{{ student.date.time().strftime('%I:%M') }}</td>
+                                <td>
+                                    <a href="{{ url_for('teacher.remove_student', student_test_id=student.id) }}" class="remove-student-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <form style="margin-top: 1rem;" action="{{ url_for('teacher.add_student', test_id=test.id) }}" method="post">
+                {{ student_form.hidden_tag() }}
+                <!-- Student ID Field -->
+                <div class="add-student-group">
+                    {{ student_form.student_id.label }}
+                    {{ student_form.student_id }}
+                </div>
+            
+                <!-- Date Field -->
+                <div class="add-student-group">
+                    {{ student_form.date.label }}
+                    {{ student_form.date }}
+                </div>
+                <!-- Time Field -->
+                <div class="add-student-group">
+                    {{ student_form.time.label }}
+                    {{ student_form.time }}
+                </div>
+            
+                <!-- Comments Field -->
+                <div class="add-student-group">
+                    {{ student_form.comments.label }}
+                    {{ student_form.comments }}
+                </div>
+                <div class="button-group">
+                    <button id="finalize-test-btn" type="submit">Add Student</button>
+                </div>
+            </form>
         </div>
-        <form action="{{ url_for('teacher.add_student', test_id=test.id) }}" method="post">
-            {{ student_form.hidden_tag() }}
-
-            <!-- Student ID Field -->
-            <div class="add-student-group">
-                {{ student_form.student_id.label }}
-                {{ student_form.student_id }}
-            </div>
-        
-            <!-- Date Field -->
-            <div class="add-student-group">
-                {{ student_form.date.label }}
-                {{ student_form.date }}
-            </div>
-
-            <!-- Time Field -->
-            <div class="add-student-group">
-                {{ student_form.time.label }}
-                {{ student_form.time }}
-            </div>
-        
-            <!-- Comments Field -->
-            <div class="add-student-group">
-                {{ student_form.comments.label }}
-                {{ student_form.comments }}
-            </div>
-            <div class="button-group">
-                <button id="finalize-test-btn" type="submit">Add Student</button>
-            </div>
-        </form>
 {% endblock %}
 
