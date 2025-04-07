@@ -8,7 +8,7 @@
 
 {% block content %}
     <div class="section">
-        <h1 class="margin-bottom: 1.5rem;">Edit {{ test.name|title }}</h1>
+        <h1 class="margin-bottom: 1.5rem;">{{ test.name|title }}</h1>
         {# Display flashed messages #}
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -19,26 +19,9 @@
                 </ul>
             {% endif %}
         {% endwith %}
-        <form method="POST">
-            {{ test_form.hidden_tag() }}
 
-            {{ test_form.name.label }}
-            {{ test_form.name(size=20) }}
 
-            {{ test_form.time.label }}
-            {{ test_form.time() }}
-
-            {{ test_form.open_note.label }}
-            {{ test_form.open_note() }}
-
-            {{ test_form.comments.label }}
-            {{ test_form.comments(rows=3, cols=40) }}
-            <div class="button-group">
-                <a href="{{ url_for('teacher.get_tests') }}" class="button return-btn">Go back</a>
-                <button id="finalize-test-btn" type="submit">Update Test</button>
-            </div>
-        </form>
-        <div style="margin-top: 2rem;">
+        <div style="margin-bottom: 2rem;">
             <h2>Students Scheduled</h2>
             <div id="selected-students" class="selected-students">
                 <table id="assignment-table">
@@ -67,6 +50,7 @@
                     </tbody>
                 </table>
             </div>
+            <h3>Add a Student</h3>
             <form style="margin-top: 1rem;" action="{{ url_for('teacher.add_student', test_id=test.id) }}" method="post">
                 {{ student_form.hidden_tag() }}
                 <!-- Student ID Field -->
@@ -92,9 +76,31 @@
                     {{ student_form.comments }}
                 </div>
                 <div class="button-group">
+                    <a href="{{ url_for('teacher.get_tests') }}" class="button return-btn">Go back</a>
                     <button id="finalize-test-btn" type="submit">Add Student</button>
                 </div>
             </form>
         </div>
+
+        <h2>Edit {{ test.name|title }}</h2>
+        <form method="POST">
+            {{ test_form.hidden_tag() }}
+
+            {{ test_form.name.label }}
+            {{ test_form.name(size=20) }}
+
+            {{ test_form.time.label }}
+            {{ test_form.time() }}
+
+            {{ test_form.open_note.label }}
+            {{ test_form.open_note() }}
+
+            {{ test_form.comments.label }}
+            {{ test_form.comments(rows=3, cols=40) }}
+            <div class="button-group">
+                <button id="finalize-test-btn" type="submit">Update Test</button>
+            </div>
+        </form>
+        
 {% endblock %}
 
