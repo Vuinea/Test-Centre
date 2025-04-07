@@ -2,22 +2,26 @@
 
 {% block title %}View Student Test{% endblock %}
 
+{% block styles %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='test_centre/view_student_test.css') }}">
+{% endblock %}
+
 {% block content %}
-<h1>View {{ student_test.student.preferred }}'s Test</h1>
+<h1>View {{ student_test.student.first_name + ' ' + student_test.student.surname }}'s Test</h1>
 
 <h2>Information about {{ student_test.student.preferred }}</h2>
-<table border="1">
+<table border="1" style="width: 5rem;">
 	<thead>
 		<tr>
 			{% for key in student_info.keys() %}
-				<th>{{ key }}</th>
+				<th class="lg-th">{{ key }}</th>
 			{% endfor %}
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			{% for value in student_info.values() %}
-				<td>{{ value }}</td>
+				<td >{{ value }}</td>
 			{% endfor %}
 		</tr>
 	</tbody>
@@ -41,9 +45,13 @@
 	</tbody>
 </table>
 
-<a href="{{ url_for('test_centre.view_schedule') }}">
-	Go back to schedule
-</a>
+
+
+<div class="button-group" style="padding-top: 1.2rem;">
+	<a class="button return-btn" href="{{ url_for('test_centre.view_schedule') }}">
+		Go back to schedule
+	</a>
+</div>
 
 {% endblock %}
 
