@@ -1,16 +1,25 @@
 let students = [];
 let studentNames = [];
+const existingStudentsDivs = document.getElementsByClassName('student-name');
+const existingStudents = [...existingStudentsDivs].map(div => div.innerText);
 
 // Fetch all students from the local URL
 async function getStudents() {
     try {
-        const response = await fetch('/tests/get_students'); // Replace with your actual URL
+        const response = await fetch('/tests/get_students');
         if (!response.ok) {
             throw new Error('Failed to fetch students');
         }
         const data = await response.json(); // Assuming the response is JSON
         students = data; // Store the fetched students in the global array
         studentNames = Object.keys(students);
+        for (let i = 0; i < studentNames.length; i++) {
+            const studentName = studentNames[i];
+            if (existingStudents.includes(studentName)) {
+                studentNames.splice(i, 1); // Remove the existing student from the list
+                i--; // Adjust the index after removal
+            }
+        }
     } catch (error) {
         console.error('Error fetching students:', error);
     }
@@ -33,6 +42,8 @@ searchInput.addEventListener("input", () => {
     const filteredStudents = studentNames.filter(student =>
         student.toLowerCase().includes(query)
     );
+
+    // TODO: check if the student is already added to the test
 
     // Display the filtered students in the autocomplete list
     filteredStudents.forEach(student => {

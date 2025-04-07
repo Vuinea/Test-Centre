@@ -34,7 +34,7 @@
                     <tbody>
                         {% for student in students %}
                             <tr>
-                                <td>{{ student.student.first_name + ' ' + student.student.surname }}</td>
+                                <td class="student-name">{{ student.student.first_name + ' ' + student.student.surname }}</td>
                                 <td>{{ student.date.date().strftime('%m/%d/%Y') }}</td>
                                 <td>{{ student.date.time().strftime('%I:%M') }}</td>
                                 <td>
