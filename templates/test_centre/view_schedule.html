@@ -48,7 +48,6 @@
                 <tr>
                     <th>Student</th>
                     <th>Test Name</th>
-                    <th>Date</th>
                     <th>Time</th>
                     <th>Completed</th>
                     <th>Delivered</th>
@@ -65,7 +64,6 @@
                             {{ test.student.first_name + ' ' + test.student.surname }}
                         </td>
                         <td>{{ test.test.name }}</td>
-                        <td>{{ day_dict[test.date.date().weekday()] + ', ' + test.date.date().strftime('%m/%d/%Y') }}</td>
                         <td>{{ test.date.time().strftime('%I:%M') }}</td>
                         <td>{{ yes_no[test.completed] }}</td>
                         <td>{{ yes_no[test.delivered] }}</td>
