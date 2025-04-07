@@ -108,7 +108,9 @@ def add_student(test_id):
                 StudentTest.test_id == test_id
             ).first()
             if existing_enrollment:
-                return "Student is already enrolled in this test", 400
+                flash('Student is already enrolled in this test', 'error')
+                return redirect(url_for('teacher.edit_test', test_id=test_id))
+                        
             student_test = StudentTest(
                 student=student,
                 test=test,
@@ -120,3 +122,21 @@ def add_student(test_id):
             return redirect(url_for('teacher.edit_test', test_id=test_id))
 
         return redirect(url_for('teacher.edit_test', test_id=test_id))
+
+@bp.route('/remove_student/<int:student_test_id>')
+def remove_student(student_test_id: int):
+    TEACHER = db.session.query(Teacher).where(Teacher.id == 1).first()
+    student_test = db.session.query(StudentTest).filter(StudentTest.id == student_test_id).first()
+    if not student_test:
+        flash("Student Test not found", 'error')
+        return redirect(url_for('teacher.get_tests'))
+    
+    student = student_test.student
+    test = student_test.test
+
+    db.session.delete(student_test)
+    db.session.commit()
+
+    flash(f"{student.first_name} removed successfully from {test.name}", 'success')
+    return redirect(url_for('teacher.edit_test', test_id=test.id))
+
