@@ -30,7 +30,6 @@ searchInput.addEventListener("input", () => {
     if (!query) return;
 
     // Filter students based on the query
-    console.log(studentNames);
     const filteredStudents = studentNames.filter(student =>
         student.toLowerCase().includes(query)
     );
@@ -50,3 +49,43 @@ searchInput.addEventListener("input", () => {
     });
 });
 
+const addStudentForm = document.getElementById('add-student-form');
+
+async function sendData(formData) {  
+    const url = window.location.href;
+    const testId = url.substring(url.lastIndexOf('/') + 1);
+    try {
+      const response = await fetch(`/tests/add_student/${testId}`, {
+        method: "POST",
+        // Set the FormData instance as the request body
+        body: formData,
+      })
+      .then((response) => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert('Error:', error);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  
+
+addStudentForm.addEventListener('submit', async (event) => {
+    event.preventDefault()
+    console.log(students);
+    const formData = new FormData(addStudentForm);
+    const studentName = formData.get('student-search');
+    const studentId = students[studentName]; // Get the student ID using the name
+    if (!studentId) {
+        alert('Student not found!');
+        return;
+    }
+
+    // Replace "student-search" with "student_id"
+    formData.delete('student-search');
+    formData.append('student_id', studentId);
+    sendData(formData);
+
+})

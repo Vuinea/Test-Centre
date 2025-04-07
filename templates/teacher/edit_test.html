@@ -51,12 +51,12 @@
                 </table>
             </div>
             <h3 style="margin-top: 2rem">Add a Student</h3>
-            <form style="margin-top: 1rem;" action="{{ url_for('teacher.add_student', test_id=test.id) }}" method="post">
+            <form method="post" id="add-student-form" style="margin-top: 1rem;">
                 {{ student_form.hidden_tag() }}
                 <!-- Student ID Field -->
                 <div class="section">
                     <label for="student-search">Student Name</label>
-                    <input type="text" id="student-search" placeholder="Search Bar" autocomplete="off" />
+                    <input name="student-search" type="text" id="student-search" placeholder="Search Bar" autocomplete="off" />
                     <ul id="autocomplete-list" class="autocomplete-list"></ul>
                     </div>
                   

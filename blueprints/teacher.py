@@ -109,7 +109,8 @@ def add_student(test_id):
             ).first()
             if existing_enrollment:
                 flash('Student is already enrolled in this test', 'error')
-                return redirect(url_for('teacher.edit_test', test_id=test_id))
+                # return redirect(url_for('teacher.edit_test', test_id=test_id))
+                return "Student already enrooled in this test", 401
                         
             student_test = StudentTest(
                 student=student,
@@ -119,6 +120,7 @@ def add_student(test_id):
             )
             db.session.add(student_test)
             db.session.commit()
+            flash(f'{student.first_name} {student.surname} added successfully to {test.name}', 'success')
             return redirect(url_for('teacher.edit_test', test_id=test_id))
 
         return redirect(url_for('teacher.edit_test', test_id=test_id))
