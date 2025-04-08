@@ -19,12 +19,6 @@ Configure the settings to connect the webapp to your desired domain or subdomain
 
 Run the app using `flask --app Test-Centre run`
 
-## Troubleshooting
-
-The app might not run
-the settings might be wrong
-try running with debug flag
-
 # For Teachers
 
 ## Getting Started
@@ -46,10 +40,6 @@ Access the TEST-CENTRE at the url provided by your IT department. You will be pr
 ## Schedule a Make-up Test
 
 Once you have communicated with the student about the date and time they will be able to take the test, simply create a new test using the steps above and add the student to it.
-
-# For Students
-
-Students will not use TEST-CENTRE directly. They will receive notifications from the system via their school email.
 
 # For Test-Centre Employees
 
