@@ -6,11 +6,10 @@ This project is a management system for Ashbury's test centre.
 
 TEST-CENTRE is a webapp that works with a database to plan out when students will be taking tests in the test centre and make sure their individual accommodation are handled properly. The IT Department sets up the system and handles backend issues. Teachers use the system to schedule tests for students. Students receive notifications of their tests via email. Test Centre staff use the system to view test schedules and report attendence or problems during tests.
 
-### For IT Department
-
-TEST-CENTRE requires Python.
 
 ## Getting Started
+
+Download python if it is not already on your system
 
 Clone the repository using `git clone https://github.com/Vuinea/Test-Centre/`
 
