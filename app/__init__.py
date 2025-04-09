@@ -7,17 +7,17 @@ import os
 
 db_dir = os.path.join(os.getcwd(), 'instance/test_centre.db')
 
-# with app.app_context():
-#     db.drop_all()
-#     db.create_all()
-#     insert_into_database()
-#     t = Teacher(name='John Doe')
-#     db.session.add(t)
-#     tc_teacher = Teacher(name='Mrs. Slater', test_centre_employee=True)
-#     db.session.add(tc_teacher)
-#     example_test = Test(name='Example Test', time=60, teacher=t)
-#     db.session.add(example_test)
-#     db.session.commit()
+with app.app_context():
+     db.drop_all()
+     db.create_all()
+     insert_into_database()
+     t = Teacher(name='John Doe')
+     db.session.add(t)
+     tc_teacher = Teacher(name='Mrs. Slater', test_centre_employee=True)
+     db.session.add(tc_teacher)
+     example_test = Test(name='Example Test', time=60, teacher=t)
+     db.session.add(example_test)
+     db.session.commit()
    
 
 @app.route('/')
