@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from sqlalchemy import asc
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -26,6 +26,7 @@ def view_schedule():
 
     is_empty = len(tests) == 0
 
+    # print(tests[0].student.first_name)
     #######
     # Create a dictionary to group tests by day of the week, month, and day of the month
     tests_by_day = defaultdict(list)
@@ -80,9 +81,9 @@ def view_student_test(student_test_id: int):
     # Get the test
     student_test = db.session.query(StudentTest).where(StudentTest.id == student_test_id).first()
     if not student_test:
-        return "Student test not found", 404
+        flash("Student test not found", 'error')
+        return redirect(url_for('test_centre.view_schedule'))
     student = student_test.student
-    print(student_test)
     yes_no = {
         True: "Yes",
         False: "No"

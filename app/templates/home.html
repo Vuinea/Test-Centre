@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the Test Centre App!</h1>
+    <li class="home-li">
+        <a class="home-link" href="{{ url_for('teacher.get_tests') }}">Click here for the teacher view!</a>
+    </li>
+    <li class="home-li">
+        <a class="home-link" href="{{ url_for('test_centre.view_schedule') }}">Click here for the test centre view!</a>
+    </li>
+{% endblock %}
