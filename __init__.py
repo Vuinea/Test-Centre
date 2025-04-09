@@ -29,4 +29,3 @@ from .blueprints.test_centre import bp as test_centre_bp
 app.register_blueprint(test_centre_bp)
 
 # flask --app Test-Centre --debug run
-

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from sqlalchemy import asc
 from collections import defaultdict
 from datetime import datetime, timedelta
 from ..db.models import Teacher, Test, StudentTest
@@ -21,7 +22,9 @@ def view_schedule():
     tests = db.session.query(StudentTest).filter(
         StudentTest.date >= now,
         StudentTest.date <= friday,
-    ).all()
+    ).order_by(StudentTest.date).all()
+
+    is_empty = len(tests) == 0
 
     #######
     # Create a dictionary to group tests by day of the week, month, and day of the month
@@ -63,7 +66,8 @@ def view_schedule():
                            day_dict=day_dict, 
                            yes_no=yes_no,
                            tests_by_day=tests_by_day,
-                           overdue_tests=overdue_tests,)
+                           overdue_tests=overdue_tests,
+                           is_empty=is_empty)
 
 
 @bp.route('view_student_test/<int:student_test_id>')
@@ -105,8 +109,8 @@ def view_student_test(student_test_id: int):
         'Date': f'{student_test.date.date()} at {student_test.date.time()}',
         'Duration (minutes)': test.time + test.time * student.extra_time + test.time * student.ELL_extra_time,
         'Open Note': yes_no[test.open_note],
-        'Student Comments': student_test.comments,
         'Test Comments': test.comments,
+        'Student Comments': student_test.comments,
         'Delivered': student_test.delivered,
         'Teacher': test.teacher.name,
     }

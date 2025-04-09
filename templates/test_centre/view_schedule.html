@@ -8,7 +8,7 @@
 
 
 {% block content %}
-<h1>View Tests</h1>
+<h1>View Tests for this Week</h1>
 
     {% if overdue_tests %}
         <h2 style="color: red;">Overdue Tests</h2>
@@ -40,39 +40,42 @@
             </tbody>
         </table>
     {% endif %}
-
-    {% for header, tests in tests_by_day.items() %}
-        <h2>{{ header }}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Student</th>
-                    <th>Test Name</th>
-                    <th>Time</th>
-                    <th>Completed</th>
-                    <th>Delivered</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for test in tests %}
+    {% if not is_empty %}
+        {% for header, tests in tests_by_day.items() %}
+            <h2>{{ header }}</h2>
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            {#<a href="{{ url_for('test_centre.view_student_test', student_test_id=test.id) }}">
-                                {{ test.student.first_name + ' ' + test.student.surname }}
-                            </a>#}
-                            {{ test.student.first_name + ' ' + test.student.surname }}
-                        </td>
-                        <td>{{ test.test.name }}</td>
-                        <td>{{ test.date.time().strftime('%I:%M') }}</td>
-                        <td>{{ yes_no[test.completed] }}</td>
-                        <td>{{ yes_no[test.delivered] }}</td>
-                        <td>
-                            <a class="edit-btn" href="{{ url_for('test_centre.view_student_test', student_test_id=test.id) }}">View</a>
-                        </td>
+                        <th>Student</th>
+                        <th>Test Name</th>
+                        <th>Time</th>
+                        <th>Completed</th>
+                        <th>Delivered</th>
+                        <th></th>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endfor %}
+                </thead>
+                <tbody>
+                    {% for test in tests %}
+                        <tr>
+                            <td>
+                                {#<a href="{{ url_for('test_centre.view_student_test', student_test_id=test.id) }}">
+                                    {{ test.student.first_name + ' ' + test.student.surname }}
+                                </a>#}
+                                {{ test.student.first_name + ' ' + test.student.surname }}
+                            </td>
+                            <td>{{ test.test.name }}</td>
+                            <td>{{ test.date.time().strftime('%I:%M') }}</td>
+                            <td>{{ yes_no[test.completed] }}</td>
+                            <td>{{ yes_no[test.delivered] }}</td>
+                            <td>
+                                <a class="edit-btn" href="{{ url_for('test_centre.view_student_test', student_test_id=test.id) }}">View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+    {% else %}
+            <h3>No Tests this Week!</h3>
+    {% endif %}
 {% endblock %}
