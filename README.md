@@ -17,7 +17,7 @@ Download required dependencies using `pip install -r requirements.txt`.
 
 Configure the settings to connect the webapp to your desired domain or subdomain.
 
-Run the app using `flask --app Test-Centre run`
+Run the app using `cd Test-Centre` and then `flask --app app run`
 
 # For Teachers
 
