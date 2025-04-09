@@ -23,7 +23,7 @@ Run the app using `flask --app Test-Centre run`
 
 ## Getting Started
 
-Access the TEST-CENTRE at the url provided by your IT department. You will be prompted to login using your Microsoft credentials.
+Access the TEST-CENTRE at the url provided by your IT department. You will be prompted to login using your credentials.
 
 ## Schedule a Test
 
@@ -45,7 +45,7 @@ Once you have communicated with the student about the date and time they will be
 
 ## Getting Started
 
-Access the TEST-CENTRE at the url provided by your IT department. You will be prompted to login using your Microsoft credentials.
+Access the TEST-CENTRE at the url provided by your IT department. You will be prompted to login using your credentials.
 
 ## View Test Schedule
 
