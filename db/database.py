@@ -35,7 +35,7 @@ def merge_data(students_df: pd.DataFrame, ap_df: pd.DataFrame, ell_df: pd.DataFr
     return merged_df
 
 def insert_into_database():
-    data_path = os.path.join(os.getcwd(), 'instance/ap_ell_master_for_teachers.xlsx')
+    data_path = os.path.join(os.getcwd(), 'data/ap_ell_master_for_teachers.xlsx')
     data = load_data_from_excel(data_path)
     merged = merge_data(*data)
 
