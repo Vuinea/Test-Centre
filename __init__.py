@@ -1,3 +1,5 @@
+from flask import render_template
+from werkzeug.exceptions import HTTPException
 from .app import app, db, DB_NAME
 from .db.models import *
 from .db.database import insert_into_database
@@ -22,6 +24,20 @@ db_dir = os.path.join(os.getcwd(), 'instance/test_centre.db')
 @app.route('/')
 def home():
     return 'hello world'
+
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # pass through HTTP errors
+    if isinstance(e, HTTPException):
+        return e
+
+    # now you're handling non-HTTP exceptions only
+    return render_template("error/500_generic.html", e=e), 500
+
+@app.errorhandler(404)
+def not_found(e):
+  return render_template('error/404.html'), 404
 
 from .blueprints.teacher import bp as teacher_bp
 app.register_blueprint(teacher_bp)

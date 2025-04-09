@@ -1,3 +1,12 @@
 body {
-    background-color: antiquewhite;
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f5f6f7;
+    padding: 40px;
+  }
+
+
+h1 {
+font-size: 28px;
+font-weight: 700;
+margin-bottom: 6px;
 }

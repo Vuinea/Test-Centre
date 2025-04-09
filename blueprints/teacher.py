@@ -47,7 +47,8 @@ def edit_test(test_id):
     # Fetch the test by ID and ensure the teacher owns the test
     test = db.session.query(Test).filter(Test.id == test_id, Test.teacher_id == TEACHER.id).first()
     if not test:
-        return "Test not found or you do not have permission to edit this test", 404
+        flash("Test not found or you do not have permission to edit this test", 'error')
+        return redirect(url_for('teacher.get_tests'))
 
     enrolled_students = db.session.query(StudentTest).filter(StudentTest.test_id == test_id).all()
     # Create a form instance, pre-populating it with the test's data
@@ -101,7 +102,8 @@ def add_student(test_id):
             date_and_time = datetime.datetime.combine(date, time)
             student = db.session.query(Student).filter(Student.id == student_id).first()
             if not student:
-                return "Student not found", 404
+                flash('Student not found', 'error')
+                return redirect(url_for('teacher.edit_test', test_id=test_id))
             # Check if the student is already enrolled in the test
             existing_enrollment = db.session.query(StudentTest).filter(
                 StudentTest.student_id == student_id,
@@ -110,7 +112,7 @@ def add_student(test_id):
             if existing_enrollment:
                 flash('Student is already enrolled in this test', 'error')
                 # return redirect(url_for('teacher.edit_test', test_id=test_id))
-                return "Student already enrooled in this test", 401
+                return redirect(url_for('teacher.edit_test', test_id=test_id))
                         
             student_test = StudentTest(
                 student=student,
