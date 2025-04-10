@@ -59,6 +59,37 @@ In the test detail view, mark each student as present or absent at the start of 
 
 If for any reason a student is unable to complete the test, edit the attendence report to mark them absent. The teacher will handle rescheduling.
 
-# Contact or Support Info
+## Contact or Support Info
 
 Contact your IT Department for help if needed.
+
+## User Stories
+
+Teachers want to be able to schedule test for ell/ap and handle students who missed the test quickly and without too much hassle
+	- View in the webapp
+
+Test Space Administrators want to be able to reliably know who is taking a test at what time and the details of how long the test runs and what students are allowed for it
+	- View in the webapp
+
+School Techs want to be able to look at code and docs to fix problems when they arise 
+	- Docs
+	- Code
+	- Comments
+
+## Planning 
+
+ER Diagram:
+<img width="1014" alt="image" src="https://github.com/user-attachments/assets/a3863474-54fc-4dbf-8742-e1ff5887998c" />
+
+Database Diagram: 
+<img width="816" alt="image" src="https://github.com/user-attachments/assets/0fecc0e6-9067-4a75-8992-5cd453ac45b8" />
+
+User Flow Diagram:
+![image](https://github.com/user-attachments/assets/5d0d5270-bbb0-468d-ba31-330f8c6e9b0d)
+
+UI Diagram:
+![image](https://github.com/user-attachments/assets/4e44e9e7-df59-4674-8cdc-066446558503)
+
+
+
+
