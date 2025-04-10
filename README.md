@@ -79,10 +79,10 @@ School Techs want to be able to look at code and docs to fix problems when they 
 ## Planning 
 
 ER Diagram:
-<img width="1014" alt="image" src="https://github.com/user-attachments/assets/a3863474-54fc-4dbf-8742-e1ff5887998c" />
+![image](https://github.com/user-attachments/assets/a3863474-54fc-4dbf-8742-e1ff5887998c) 
 
 Database Diagram: 
-<img width="816" alt="image" src="https://github.com/user-attachments/assets/0fecc0e6-9067-4a75-8992-5cd453ac45b8" />
+![image](https://github.com/user-attachments/assets/0fecc0e6-9067-4a75-8992-5cd453ac45b8)
 
 User Flow Diagram:
 ![image](https://github.com/user-attachments/assets/5d0d5270-bbb0-468d-ba31-330f8c6e9b0d)
@@ -90,6 +90,8 @@ User Flow Diagram:
 UI Diagram:
 ![image](https://github.com/user-attachments/assets/4e44e9e7-df59-4674-8cdc-066446558503)
 
+Whiteboard Sketches:
+![image](https://github.com/user-attachments/assets/50a354c6-88bb-46b7-9cab-c4937d9983dc)
 
 
 
